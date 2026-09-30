@@ -1,36 +1,166 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PilaHealth — Staff Dashboard</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .btn-call-next-highlight {
+      background-color: var(--accent, #0284c7) !important;
+      color: #ffffff !important;
+      font-weight: 700 !important;
+      font-size: 1rem !important;
+      letter-spacing: 0.5px;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(145, 145, 145, 0.35);
+      transition: background-color 0.2s ease, transform 0.1s ease;
+    }
+
+    .btn-call-next-highlight:hover {
+      background-color: var(--accent-hover, #0284c7) !important;
+      transform: translateY(-1px);
+    }
+
+    .btn-call-next-highlight:active {
+      transform: translateY(0);
+    }
+
+    .admin-main h1 {
+      font-size: 1.75rem !important;
+    }
+
+    .card-header h2 {
+      font-size: 1.35rem !important;
+    }
+
+    .btn-secondary {
+      font-size: 0.95rem !important;
+      padding: 12px 18px !important;
+    }
+
+    .form-group label {
+      font-size: 0.95rem !important;
+      font-weight: 600;
+    }
+
+    .form-group input {
+      font-size: 1rem !important;
+      padding: 12px 14px !important;
+    }
+
+    .btn-primary {
+      font-size: 1rem !important;
+      padding: 12px 20px !important;
+    }
+  </style>
 </head>
 <body>
-  <div class="nav">
-    <h1>PilaHealth — Staff</h1>
-    <div>
-      <span id="userName" style="margin-right:10px;"></span>
-      <button onclick="logout()">LOGOUT</button>
-    </div>
-  </div>
 
-  <div class="card">
-    <h2>Queue Management</h2>
-    <button onclick="loadQueue()">🔄 Refresh Queue</button>
-    <button onclick="callNext()" style="background:#ef6c00;">📢 CALL NEXT PATIENT</button>
-    <p id="msg" class="msg"></p>
-    <div id="queue">Loading...</div>
-  </div>
+  <div class="admin-layout">
 
-  <div class="card">
-    <h2>Check-In Patient</h2>
-    <p style="color:#666;font-size:13px;">
-      Enter appointment ID to check in a walk-in or assisted patient.
-    </p>
-    <input id="apptId" type="number" placeholder="Appointment ID (e.g. 1)">
-    <button onclick="assistCheckIn()">CHECK-IN</button>
-    <p id="checkMsg" class="msg"></p>
+    <!-- Sidebar Navigation -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-brand">
+        <div class="logo-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 5v14M5 12h14"/>
+          </svg>
+        </div>
+        <span class="brand-name">Pila<span class="highlight">Health</span></span>
+      </div>
+      <div class="sidebar-tag">Staff Portal</div>
+
+      <nav class="sidebar-nav">
+        <a href="#queue-section" class="nav-item active">
+          <span>Queue Management</span>
+        </a>
+        <a href="#checkin-section" class="nav-item">
+          <span>Check-In Patient</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-profile-badge">
+          <div class="avatar">S</div>
+          <div class="profile-meta">
+            <span id="userName" class="profile-name">Loading...</span>
+            <span class="profile-role">Triage Staff</span>
+          </div>
+        </div>
+        <button onclick="logout()" class="btn-logout-sidebar">
+          <span>LOGOUT</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="admin-main">
+
+      <!-- Header -->
+      <header class="main-topbar">
+        <div class="page-title-group">
+          <h1>Staff Dashboard</h1>
+          <p class="page-subtitle">Manage patient arrivals and call queue numbers.</p>
+        </div>
+      </header>
+
+      <!-- Dashboard Layout Grid -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; align-items: start;">
+
+        <!-- Card 1: Queue Management -->
+        <section id="queue-section" class="card" style="margin-bottom: 0;">
+          <div class="card-header">
+            <h2>Queue Management</h2>
+          </div>
+
+          <div style="display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; align-items: center;">
+            <button onclick="callNext()" class="btn-call-next-highlight">
+              CALL NEXT PATIENT
+            </button>
+            <button onclick="loadQueue()" class="btn-secondary">
+              Refresh Queue
+            </button>
+          </div>
+
+          <p id="msg" class="msg" style="margin-bottom: 16px; font-size: 0.95rem;"></p>
+
+          <div class="table-wrapper">
+            <div id="queue" style="font-size: 0.95rem;">Loading...</div>
+          </div>
+        </section>
+
+        <!-- Card 2: Check-In Patient -->
+        <section id="checkin-section" class="card" style="margin-bottom: 0;">
+          <div class="card-header">
+            <h2>Check-In Patient</h2>
+          </div>
+
+          <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px;">
+            Enter appointment ID to check in a walk-in or assisted patient.
+          </p>
+
+          <div class="form-group" style="margin-bottom: 20px;">
+            <label for="apptId">Appointment ID</label>
+            <input id="apptId" type="number" placeholder="Appointment ID (e.g. 1)">
+          </div>
+
+          <div class="form-actions">
+            <button onclick="assistCheckIn()" class="btn-primary" style="width: 100%;">
+              CHECK-IN
+            </button>
+          </div>
+
+          <p id="checkMsg" class="msg" style="margin-top: 16px; font-size: 0.95rem;"></p>
+        </section>
+
+      </div>
+
+    </main>
+
   </div>
 
   <script src="staff.js"></script>
