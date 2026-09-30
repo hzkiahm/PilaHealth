@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PilaHealth — Patient Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="nav">
+    <h1>PilaHealth — Patient</h1>
+    <div>
+      <span id="userName" style="margin-right:10px;"></span>
+      <button onclick="logout()">LOGOUT</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Book Appointment</h2>
+    <label>Appointment Type</label>
+    <select id="apptType"></select>
+
+    <label>Doctor</label>
+    <select id="doctor"></select>
+
+    <label>Date</label>
+    <input id="date" type="date">
+
+    <label>Time</label>
+    <input id="time" type="time">
+
+    <button onclick="book()">CONFIRM BOOKING</button>
+    <p id="bookMsg" class="msg"></p>
+  </div>
+
+  <div class="card">
+    <h2>My Appointments</h2>
+    <div id="appointments">Loading...</div>
+  </div>
+
+  <div class="card">
+    <h2>My Notifications</h2>
+    <button class="secondary" onclick="loadNotifications()">Refresh Notifications</button>
+    <div id="notifications"></div>
+  </div>
+
+  <script src="patient.js"></script>
+</body>
+</html>

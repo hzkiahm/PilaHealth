@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PilaHealth — Staff Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="nav">
+    <h1>PilaHealth — Staff</h1>
+    <div>
+      <span id="userName" style="margin-right:10px;"></span>
+      <button onclick="logout()">LOGOUT</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Queue Management</h2>
+    <button onclick="loadQueue()">🔄 Refresh Queue</button>
+    <button onclick="callNext()" style="background:#ef6c00;">📢 CALL NEXT PATIENT</button>
+    <p id="msg" class="msg"></p>
+    <div id="queue">Loading...</div>
+  </div>
+
+  <div class="card">
+    <h2>Check-In Patient</h2>
+    <p style="color:#666;font-size:13px;">
+      Enter appointment ID to check in a walk-in or assisted patient.
+    </p>
+    <input id="apptId" type="number" placeholder="Appointment ID (e.g. 1)">
+    <button onclick="assistCheckIn()">CHECK-IN</button>
+    <p id="checkMsg" class="msg"></p>
+  </div>
+
+  <script src="staff.js"></script>
+</body>
+</html>

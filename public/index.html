@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PilaHealth — Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="login-card">
+    <h1>PilaHealth</h1>
+    <p style="color:#666;font-size:14px;margin-bottom:20px;">
+      Integrated Healthcare Appointment & Queue System
+    </p>
+
+    <input id="email" type="email" placeholder="Email" value="patient@pilahealth.com">
+    <input id="password" type="password" placeholder="Password" value="password123">
+
+    <button onclick="login()">LOGIN</button>
+    <p id="msg" class="msg"></p>
+
+    <div style="margin-top:20px;font-size:12px;color:#888;text-align:left;">
+      <strong>Sample accounts (password: password123):</strong><br>
+      patient@pilahealth.com<br>
+      staff@pilahealth.com<br>
+      doctor@pilahealth.com<br>
+      admin@pilahealth.com
+    </div>
+  </div>
+
+  <script>
+    async function login() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const msg = document.getElementById('msg');
+
+      msg.className = 'msg';
+      msg.textContent = '';
+
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        const role = data.user.role;
+        if (role === 'patient') location.href = 'patient.html';
+        else if (role === 'staff') location.href = 'staff.html';
+        else if (role === 'doctor') location.href = 'doctor.html';
+        else if (role === 'admin') location.href = 'admin.html';
+      } else {
+        msg.className = 'msg error';
+        msg.textContent = data.error || 'Login failed';
+      }
+    }
+
+    // Allow Enter key to login
+    document.addEventListener('keypress', e => {
+      if (e.key === 'Enter') login();
+    });
+  </script>
+</body>
+</html>

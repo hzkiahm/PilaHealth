@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PilaHealth — Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="nav">
+    <h1>PilaHealth — Admin</h1>
+    <div>
+      <span id="userName" style="margin-right:10px;"></span>
+      <button onclick="logout()">LOGOUT</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Dashboard Statistics</h2>
+    <button onclick="loadStats()">🔄 Refresh</button>
+    <div id="stats" style="display:flex;gap:20px;flex-wrap:wrap;margin-top:15px;"></div>
+  </div>
+
+  <div class="card">
+    <h2>Audit Log</h2>
+    <button onclick="loadAudit()">🔄 Refresh Audit Log</button>
+    <div id="audit"></div>
+  </div>
+
+  <div class="card">
+    <h2>All Notifications</h2>
+    <button onclick="loadAllNotifications()">🔄 Refresh Notifications</button>
+    <div id="notifications"></div>
+  </div>
+
+  <div class="card">
+    <h2>Users</h2>
+    <button onclick="loadUsers()">🔄 Refresh Users</button>
+    <div id="users"></div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PilaHealth — Doctor Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="nav">
+    <h1>PilaHealth — Doctor</h1>
+    <div>
+      <span id="userName" style="margin-right:10px;"></span>
+      <button onclick="logout()">LOGOUT</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Today's Queue</h2>
+    <button onclick="loadQueue()">🔄 Refresh</button>
+    <div id="queue">Loading...</div>
+  </div>
+
+  <div class="card">
+    <h2>Create Consultation Record</h2>
+    <label>Appointment ID</label>
+    <input id="apptId" type="number" placeholder="e.g. 1">
+
+    <label>Patient Name (read-only)</label>
+    <input id="patientName" type="text" readonly placeholder="Select from queue">
+
+    <label>Diagnosis</label>
+    <input id="diagnosis" type="text" placeholder="e.g. Common cold">
+
+    <label>Notes</label>
+    <input id="notes" type="text" placeholder="Additional observations">
+
+    <label>Prescription</label>
+    <input id="prescription" type="text" placeholder="e.g. Paracetamol 500mg">
+
+    <button onclick="saveRecord()">💾 SAVE CONSULTATION RECORD</button>
+    <p id="msg" class="msg"></p>
+  </div>
+
+  <div class="card">
+    <h2>My Consultation Records</h2>
+    <button onclick="loadRecords()">🔄 Refresh Records</button>
+    <div id="records"></div>
+  </div>
+
+  <script src="doctor.js"></script>
+</body>
+</html>
