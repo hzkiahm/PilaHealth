@@ -1,51 +1,140 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PilaHealth — Doctor Dashboard</title>
+  <title>PilaHealth — Doctor Portal</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
-<body>
-  <div class="nav">
-    <h1>PilaHealth — Doctor</h1>
-    <div>
-      <span id="userName" style="margin-right:10px;"></span>
-      <button onclick="logout()">LOGOUT</button>
-    </div>
-  </div>
+<body class="admin-body">
 
-  <div class="card">
-    <h2>Today's Queue</h2>
-    <button onclick="loadQueue()">🔄 Refresh</button>
-    <div id="queue">Loading...</div>
-  </div>
+  <div class="admin-layout">
+    <!-- Executive Dark Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-brand">
+        <div class="logo-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 2a2 2 0 0 0-2 2v5H4a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h5v5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-5h5a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-5V4a2 2 0 0 0-2-2h-2z"/></svg>
+        </div>
+        <span class="brand-name">Pila<span class="highlight">Health</span></span>
+      </div>
 
-  <div class="card">
-    <h2>Create Consultation Record</h2>
-    <label>Appointment ID</label>
-    <input id="apptId" type="number" placeholder="e.g. 1">
+      <div class="sidebar-tag">Clinical Portal</div>
 
-    <label>Patient Name (read-only)</label>
-    <input id="patientName" type="text" readonly placeholder="Select from queue">
+      <nav class="sidebar-nav">
+        <a href="#queue-section" class="nav-item active">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Patient Queue
+        </a>
+        <a href="#record-form-section" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Consultation Form
+        </a>
+        <a href="#records-history-section" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Medical History
+        </a>
+      </nav>
 
-    <label>Diagnosis</label>
-    <input id="diagnosis" type="text" placeholder="e.g. Common cold">
+      <div class="sidebar-footer">
+        <div class="user-profile-badge">
+          <div class="avatar">D</div>
+          <div class="profile-meta">
+            <span id="userName" class="profile-name">Doctor</span>
+            <span class="profile-role">Attending Physician</span>
+          </div>
+        </div>
+        <button class="btn-logout-sidebar" onclick="logout()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Logout
+        </button>
+      </div>
+    </aside>
 
-    <label>Notes</label>
-    <input id="notes" type="text" placeholder="Additional observations">
+    <!-- Main Workspace -->
+    <main class="admin-main">
+      <header class="main-topbar">
+        <div class="page-title-group">
+          <h1>Physician Dashboard</h1>
+          <p class="page-subtitle">Manage today's patient queue, issue prescriptions, and view consultation history</p>
+        </div>
+        <button class="btn-secondary" onclick="loadQueue(); loadRecords();">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.5 2v6h-6M2.13 15.57a10 10 0 1 0 0.57-8.38l-2.67 2.67"/></svg>
+          Sync Workstation
+        </button>
+      </header>
 
-    <label>Prescription</label>
-    <input id="prescription" type="text" placeholder="e.g. Paracetamol 500mg">
+      <!-- Section 1: Today's Queue -->
+      <section id="queue-section" class="dash-card">
+        <div class="card-header">
+          <h2>Today's Patient Queue</h2>
+          <button class="btn-secondary" onclick="loadQueue()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.13 15.57a10 10 0 1 0 0.57-8.38l-2.67 2.67"/></svg>
+            Refresh
+          </button>
+        </div>
+        <div id="queue" class="table-wrapper">
+          <div class="empty-state">Loading live queue...</div>
+        </div>
+      </section>
 
-    <button onclick="saveRecord()">💾 SAVE CONSULTATION RECORD</button>
-    <p id="msg" class="msg"></p>
-  </div>
+      <!-- Section 2: Create Consultation Record -->
+      <section id="record-form-section" class="dash-card">
+        <div class="card-header">
+          <h2>Create Consultation Record</h2>
+        </div>
+        
+        <div class="form-grid">
+          <div class="input-field-group">
+            <label for="apptId">Appointment ID</label>
+            <input id="apptId" type="number" placeholder="e.g. 1">
+          </div>
 
-  <div class="card">
-    <h2>My Consultation Records</h2>
-    <button onclick="loadRecords()">🔄 Refresh Records</button>
-    <div id="records"></div>
+          <div class="input-field-group">
+            <label for="patientName">Patient Name (Read-only)</label>
+            <input id="patientName" type="text" readonly placeholder="Select from queue above">
+          </div>
+        </div>
+
+        <div class="input-field-group">
+          <label for="diagnosis">Diagnosis</label>
+          <input id="diagnosis" type="text" placeholder="e.g. Common cold / Acute Bronchitis">
+        </div>
+
+        <div class="input-field-group">
+          <label for="notes">Clinical Notes</label>
+          <input id="notes" type="text" placeholder="Additional observations or vital signs">
+        </div>
+
+        <div class="input-field-group">
+          <label for="prescription">Prescription</label>
+          <input id="prescription" type="text" placeholder="e.g. Paracetamol 500mg - 1 tab Q8H x 3 days">
+        </div>
+
+        <div class="form-actions">
+          <button class="btn-primary" onclick="saveRecord()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Save Consultation Record
+          </button>
+        </div>
+        
+        <p id="msg" class="msg"></p>
+      </section>
+
+      <!-- Section 3: Consultation Records -->
+      <section id="records-history-section" class="dash-card">
+        <div class="card-header">
+          <h2>My Consultation Records</h2>
+          <button class="btn-secondary" onclick="loadRecords()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.13 15.57a10 10 0 1 0 0.57-8.38l-2.67 2.67"/></svg>
+            Refresh
+          </button>
+        </div>
+        <div id="records" class="table-wrapper"></div>
+      </section>
+    </main>
   </div>
 
   <script src="doctor.js"></script>
