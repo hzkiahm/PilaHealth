@@ -1,63 +1,137 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PilaHealth — Login</title>
+  <title>PilaHealth — Executive Login</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
-<body>
-  <div class="login-card">
-    <h1>PilaHealth</h1>
-    <p style="color:#666;font-size:14px;margin-bottom:20px;">
-      Integrated Healthcare Appointment & Queue System
-    </p>
+<body class="login-body">
 
-    <input id="email" type="email" placeholder="Email" value="patient@pilahealth.com">
-    <input id="password" type="password" placeholder="Password" value="password123">
+  <div class="login-wrapper">
+    <!-- Visual Hero Side (Dark Executive Theme) -->
+    <div class="login-hero">
+      <div class="hero-brand">
+        <div class="brand-icon-box">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 2a2 2 0 0 0-2 2v5H4a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h5v5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-5h5a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-5V4a2 2 0 0 0-2-2h-2z"/></svg>
+        </div>
+        <span class="brand-title">Pila<span class="highlight">Health</span></span>
+      </div>
 
-    <button onclick="login()">LOGIN</button>
-    <p id="msg" class="msg"></p>
+      <div class="hero-content">
+        <h2>Streamlined Clinical Care & Operations</h2>
+        <p>Centralized queue tracking, instant appointments, and administrative controls for high-performance health services.</p>
+      </div>
 
-    <div style="margin-top:20px;font-size:12px;color:#888;text-align:left;">
-      <strong>Sample accounts (password: password123):</strong><br>
-      patient@pilahealth.com<br>
-      staff@pilahealth.com<br>
-      doctor@pilahealth.com<br>
-      admin@pilahealth.com
+      <div class="hero-footer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span>Protected by Enterprise Encryption</span>
+      </div>
+    </div>
+
+    <!-- Login Form Side -->
+    <div class="login-form-container">
+      <div class="form-header">
+        <h3>Sign In</h3>
+        <p>Enter your account credentials to access your portal</p>
+      </div>
+
+      <div class="input-field-group">
+        <label for="email">Email Address</label>
+        <div class="input-with-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <input id="email" type="email" placeholder="name@pilahealth.com" value="admin@pilahealth.com">
+        </div>
+      </div>
+
+      <div class="input-field-group">
+        <label for="password">Password</label>
+        <div class="input-with-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <input id="password" type="password" placeholder="••••••••" value="password123">
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="login()">
+        <span>Sign In to Platform</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+
+      <p id="msg" class="msg"></p>
+
+      <!-- Demo Accounts Quick Clicker -->
+      <div class="sample-credentials-card">
+        <div class="sample-title">Demo Accounts (Password: password123)</div>
+        <div class="credentials-grid">
+          <button type="button" class="credential-chip" onclick="setDemo('patient@pilahealth.com')">
+            <span class="chip-role">Patient:</span> patient@pilahealth.com
+          </button>
+          <button type="button" class="credential-chip" onclick="setDemo('doctor@pilahealth.com')">
+            <span class="chip-role">Doctor:</span> doctor@pilahealth.com
+          </button>
+          <button type="button" class="credential-chip" onclick="setDemo('staff@pilahealth.com')">
+            <span class="chip-role">Staff:</span> staff@pilahealth.com
+          </button>
+          <button type="button" class="credential-chip" onclick="setDemo('admin@pilahealth.com')">
+            <span class="chip-role">Admin:</span> admin@pilahealth.com
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
   <script>
+    function setDemo(email) {
+      document.getElementById('email').value = email;
+      document.getElementById('password').value = 'password123';
+    }
+
     async function login() {
-      const email = document.getElementById('email').value;
+      const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
       const msg = document.getElementById('msg');
 
-      msg.className = 'msg';
-      msg.textContent = '';
-
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        const role = data.user.role;
-        if (role === 'patient') location.href = 'patient.html';
-        else if (role === 'staff') location.href = 'staff.html';
-        else if (role === 'doctor') location.href = 'doctor.html';
-        else if (role === 'admin') location.href = 'admin.html';
-      } else {
+      if (!email || !password) {
         msg.className = 'msg error';
-        msg.textContent = data.error || 'Login failed';
+        msg.textContent = 'Please enter both email and password.';
+        return;
+      }
+
+      msg.className = 'msg';
+      msg.textContent = 'Authenticating...';
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          const role = data.user ? data.user.role : data.role;
+          if (role === 'patient') location.href = 'patient.html';
+          else if (role === 'staff') location.href = 'staff.html';
+          else if (role === 'doctor') location.href = 'doctor.html';
+          else if (role === 'admin') location.href = 'admin.html';
+          else {
+            msg.className = 'msg error';
+            msg.textContent = 'Unrecognized user role.';
+          }
+        } else {
+          msg.className = 'msg error';
+          msg.textContent = data.error || 'Invalid credentials.';
+        }
+      } catch (err) {
+        msg.className = 'msg error';
+        msg.textContent = 'Server connection error.';
       }
     }
 
-    // Allow Enter key to login
     document.addEventListener('keypress', e => {
       if (e.key === 'Enter') login();
     });
